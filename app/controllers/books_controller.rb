@@ -1,6 +1,7 @@
 class BooksController < ApplicationController
   def index
     @books = Book.all
+    render json: @books.to_json, status: :ok
   end
 
   def show
@@ -27,7 +28,7 @@ class BooksController < ApplicationController
   def update
     @book = Book.find(params[:id])
     if @book.update(book_params)
-      redirect_to @book, notice: 'Book was successfully updated.'
+      render json: @book.to_json,status: :ok, notice: 'Book was successfully updated.'
     else
       render :edit
     end
@@ -36,7 +37,7 @@ class BooksController < ApplicationController
   def destroy
     @book = Book.find(params[:id])
     @book.destroy
-    redirect_to @book, notice: 'Book was successfully deleted.'
+    render json: "book was deleted", status: :ok, notice: 'Book was successfully deleted.'
   end
 
   private
